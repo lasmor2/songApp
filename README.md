@@ -1,98 +1,233 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Spotify Clone API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A RESTful API built with NestJS and MongoDB for managing songs and albums, inspired by Spotify's core functionality.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- **Songs Management**: Create, read, update, and delete songs
+- **Albums Management**: Organize songs into albums
+- **MongoDB Integration**: Persistent data storage with Mongoose ODM
+- **Docker Support**: Containerized MongoDB setup
+- **Validation**: Input validation with class-validator
+- **TypeScript**: Full TypeScript support for type safety
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠️ Tech Stack
 
-## Project setup
+- **Framework**: NestJS
+- **Database**: MongoDB with Mongoose
+- **Language**: TypeScript
+- **Validation**: class-validator, class-transformer
+- **Containerization**: Docker & Docker Compose
+- **Testing**: Jest
 
+## 📋 Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Docker Desktop (for MongoDB)
+
+## 🔧 Installation
+
+1. **Clone the repository**
 ```bash
-$ npm install
+git clone <repository-url>
+cd project-mongodb
 ```
 
-## Compile and run the project
-
+2. **Install dependencies**
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
-
+3. **Setup environment variables**
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cp .env.example .env
 ```
 
-## Deployment
+4. **Configure your `.env` file**
+```env
+# MongoDB Configuration
+MONGO_ROOT_USERNAME=admin
+MONGO_ROOT_PASSWORD=your_password_here
+MONGO_DATABASE=spotify-clone
+MONGO_PORT=27017
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Application Configuration
+NODE_ENV=development
+PORT=3000
+MONGODB_URI=mongodb://admin:your_password_here@localhost:27017/spotify-clone?authSource=admin
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🐳 Database Setup
 
-## Resources
+### Using Docker (Recommended)
 
-Check out a few resources that may come in handy when working with NestJS:
+1. **Start MongoDB container**
+```bash
+docker-compose up -d
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+2. **Stop MongoDB container**
+```bash
+docker-compose down
+```
 
-## Support
+### Manual MongoDB Installation
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+If you prefer to install MongoDB manually, ensure it's running on `localhost:27017`.
 
-## Stay in touch
+## 🚀 Running the Application
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Development mode
+npm run start:dev
 
-## License
+# Production mode
+npm run start:prod
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Debug mode
+npm run start:debug
+```
+
+The API will be available at `http://localhost:3000`
+
+## 📚 API Endpoints
+
+### Songs
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/songs` | Get all songs |
+| GET | `/songs/:id` | Get song by ID |
+| POST | `/songs` | Create new song |
+| PUT | `/songs/:id` | Update song |
+| DELETE | `/songs/:id` | Delete song |
+
+### Albums
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/albums` | Get all albums |
+| GET | `/albums/:id` | Get album by ID |
+| POST | `/albums` | Create new album |
+| PUT | `/albums/:id` | Update album |
+| DELETE | `/albums/:id` | Delete album |
+
+## 📝 Data Models
+
+### Song Schema
+```typescript
+{
+  title: string;           // Required
+  releasedDate: Date;      // Required
+  duration: string;        // Required (e.g., "3:45")
+  lyrics: string;          // Required
+  album: ObjectId;         // Required (reference to Album)
+}
+```
+
+### Album Schema
+```typescript
+{
+  title: string;           // Required
+  songs: ObjectId[];       // Array of Song references
+}
+```
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+npm run test
+
+# E2E tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+
+# Watch mode
+npm run test:watch
+```
+
+## 🔍 Code Quality
+
+```bash
+# Linting
+npm run lint
+
+# Formatting
+npm run format
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── albums/
+│   ├── dto/
+│   │   └── create-album-dto.ts
+│   ├── schemas/
+│   │   └── albums.ts
+│   ├── albums.controller.ts
+│   ├── albums.service.ts
+│   └── albums.module.ts
+├── songs/
+│   ├── dto/
+│   │   ├── create-song-dto.ts
+│   │   └── update-song-dto.ts
+│   ├── schemas/
+│   │   └── songs.ts
+│   ├── songs.controller.ts
+│   ├── songs.service.ts
+│   └── songs.module.ts
+├── common/
+│   └── pipes/
+│       └── parse-object-id.pipe.ts
+├── app.controller.ts
+├── app.service.ts
+├── app.module.ts
+└── main.ts
+```
+
+## 🔧 Configuration
+
+The application uses NestJS ConfigModule for environment configuration. Key configurations:
+
+- **MongoDB URI**: Configured via `MONGODB_URI` environment variable
+- **Port**: Application runs on port specified in `PORT` env variable (default: 3000)
+- **Database**: Uses `spotify-clone` database by default
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **MongoDB Connection Error**
+   - Ensure Docker container is running: `docker ps`
+   - Check environment variables in `.env` file
+   - Verify MongoDB URI format
+
+2. **Port Already in Use**
+   - Change the `PORT` in `.env` file
+   - Kill process using the port: `npx kill-port 3000`
+
+3. **Docker Issues**
+   - Restart Docker Desktop
+   - Remove containers: `docker-compose down -v`
+   - Rebuild: `docker-compose up -d --build`
+
+## 📄 License
+
+This project is [MIT licensed](LICENSE).
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📞 Support
+
+For support and questions, please open an issue in the repository.
