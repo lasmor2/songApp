@@ -10,6 +10,7 @@ import {
   HttpStatus,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { UpdateWriteOpResult } from 'mongoose';
 import { CreateSongDTO } from './dto/create-song-dto';
@@ -20,16 +21,22 @@ import { ParseObjectIdPipe } from '../common/pipes/parse-object-id.pipe';
 
 @Controller('songs')
 export class SongsController {
+  private readonly logger = new Logger(SongsController.name);
+  
   constructor(private songService: SongsService) {}
   @Post()
   async create(
     @Body()
     createSongDTO: CreateSongDTO,
-  ) {
+  ): Promise<Song> {
     try {
       return await this.songService.create(createSongDTO);
     } catch (error) {
-      throw new BadRequestException('Failed to create song');
+      this.logger.error('Failed to create song', error.stack);
+      throw new HttpException(
+        'Failed to create song',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
