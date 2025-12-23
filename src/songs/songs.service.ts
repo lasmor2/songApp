@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSongDTO } from './dto/create-song-dto';
+import { UpdateSongDTO } from './dto/update-song-dto';
 import { Song, SongDocument } from './schemas/songs';
-import { Model } from 'mongoose';
+import { Model, UpdateWriteOpResult, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -11,7 +12,11 @@ export class SongsService {
     private readonly songModel: Model<SongDocument>, //2
   ) {}
   async create(createSongDTO: CreateSongDTO): Promise<Song> {
-    const song = await this.songModel.create(createSongDTO); //3.
+    const songData = {
+      ...createSongDTO,
+      album: new Types.ObjectId(createSongDTO.album)
+    };
+    const song = await this.songModel.create(songData); //3.
     return song;
   }
   async find(): Promise<Song[]> {
@@ -26,7 +31,7 @@ export class SongsService {
     return this.songModel.deleteOne({ _id: id });
   }
 
-  async update(id: string, createSongDTO: CreateSongDTO) {
-    return this.songModel.updateOne({ _id: id }, createSongDTO);
+  async update(id: string, updateSongDTO: UpdateSongDTO): Promise<UpdateWriteOpResult> {
+    return this.songModel.updateOne({ _id: id }, updateSongDTO);
   }
 }

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { Album } from 'src/albums/schemas/albums';
 export type SongDocument = HydratedDocument<Song>;
 @Schema()
 export class Song {
@@ -7,15 +8,28 @@ export class Song {
     required: true,
   })
   title: string;
+  
   @Prop({
     required: true,
   })
   releasedDate: Date;
+  
   @Prop({
     required: true,
   })
   duration: string;
+  
+  @Prop({
+    required: true,
+  })
   lyrics: string;
+  
+  @Prop({
+    type: Types.ObjectId,
+    ref: Album.name,
+    required: true,
+  })
+  album: Types.ObjectId;
 }
 
 export const SongSchema = SchemaFactory.createForClass(Song);
